@@ -10,6 +10,7 @@ import {
 	Users,
 	Members,
 	Families,
+	Notes,
 } from './models';
 
 // Initialize express/router
