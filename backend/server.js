@@ -13,6 +13,12 @@ import {
 	Families,
 	Notes,
 } from './models';
+// Endpoint callbacks
+import {
+	getAllUsers,
+	addNewUser,
+	login
+} from './route-callbacks';
 
 // Initialize express/router
 const app = express();
@@ -35,54 +41,10 @@ app.use(session({
 }));
 
 // GET routes
-router.get('/', (req, res) => {
-	res.json({message: 'Hello, world!'});
-});
-router.get('/users', (req, res) => {
-	Users.find((error, users) => {
-		if (error) {
-			return res.json({success: false, error});
-		} else {
-			return res.json({success: true, data: users});
-		}
-	});
-});
+router.get('/users', (req, res) => getAllUsers(req, res, Users));
 // POST routes
-router.post('/users', (req, res) => {
-	const user = new Users();
-	const {
-		name,
-		username,
-		password,
-		passwordConf
-	} = req.body;
-	if (name && username && password && passwordConf) {
-		user.name = name;
-		user.username = username;
-		user.password = password;
-		user.passwordConf = passwordConf
-		user.save((error) => {
-			if (error) {
-				return res.json({success: false, error});
-			} else {
-				return res.json({success: true, data: user});
-			}
-		})
-	} else {
-		return res.json({success: false, error: 'You must provide name, username, password, and passwordConf'});
-	}
-});
-router.post('/login', (req, res) => {
-	const {username, password} = req.body;
-	Users.authenticate(username, password, (error, user) => {
-		if (error || !user) {
-			return res.json({success: false, error});
-		} else {
-			req.session.userId = user._id;
-			return res.json({success: true});
-		}
-	})
-});
+router.post('/users', (req, res) => addNewUser(req, res, Users));
+router.post('/login', (req, res) => login(req, res, Users));
 
 // Listen
 app.use('/api', router);
