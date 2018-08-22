@@ -6,7 +6,11 @@ import mongoose from 'mongoose';
 // Local utility imports
 import {getSecret} from './secrets';
 // Model imports
-
+import {
+	Users,
+	Members,
+	Families,
+} from './models';
 
 // Initialize express/router
 const app = express();
