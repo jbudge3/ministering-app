@@ -4,13 +4,15 @@ export function addNewUser(req, res, Users) {
 		name,
 		username,
 		password,
-		passwordConf
+		passwordConf,
+		isAdmin
 	} = req.body;
 	if (name && username && password && passwordConf) {
 		user.name = name;
 		user.username = username;
 		user.password = password;
-		user.passwordConf = passwordConf
+		user.passwordConf = passwordConf;
+		user.isAdmin = isAdmin;
 		user.save((error) => {
 			if (error) {
 				return res.json({success: false, error});
