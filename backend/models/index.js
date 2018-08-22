@@ -4,7 +4,8 @@ import mongoose, {Schema} from 'mongoose';
 const UsersSchema = new Schema({
 	name: String,
 	username: String,
-	password: String
+	password: String,
+	isAdmin: Boolean
 });
 export const Users = mongoose.model('Users', UsersSchema);
 
