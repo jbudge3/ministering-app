@@ -17,7 +17,8 @@ import {
 import {
 	getAllUsers,
 	addNewUser,
-	login
+	login,
+	deleteUser
 } from './route-callbacks';
 
 // Initialize express/router
@@ -45,6 +46,8 @@ router.get('/users', (req, res) => getAllUsers(req, res, Users));
 // POST routes
 router.post('/users', (req, res) => addNewUser(req, res, Users));
 router.post('/login', (req, res) => login(req, res, Users));
+// DELETE routes
+router.delete('/users/:userId', (req, res) => deleteUser(req, res, Users));
 
 // Listen
 app.use('/api', router);

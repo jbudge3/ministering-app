@@ -5,6 +5,7 @@ export function login(req, res, Users) {
 			return res.json({success: false, error});
 		} else {
 			req.session.userId = user._id;
+			req.session.isAdmin = user.isAdmin;
 			return res.json({success: true});
 		}
 	})

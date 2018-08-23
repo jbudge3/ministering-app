@@ -7,7 +7,7 @@ export function addNewUser(req, res, Users) {
 		passwordConf,
 		isAdmin
 	} = req.body;
-	if (name && username && password && passwordConf) {
+	if (name && username && password && passwordConf && isAdmin) {
 		user.name = name;
 		user.username = username;
 		user.password = password;
@@ -21,6 +21,6 @@ export function addNewUser(req, res, Users) {
 			}
 		})
 	} else {
-		return res.json({success: false, error: 'You must provide name, username, password, and passwordConf'});
+		return res.json({success: false, error: 'You must provide name, username, password, passwordConf, and isAdmin'});
 	}
 }
