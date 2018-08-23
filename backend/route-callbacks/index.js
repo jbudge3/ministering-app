@@ -6,3 +6,4 @@ export {addNewMember} from './addNewMember';
 export {deleteMember} from './deleteMember';
 export {addNewFamily} from './addNewFamily';
 export {deleteFamily} from './deleteFamily';
+export {addNewNote} from './addNewNote';

@@ -4,8 +4,8 @@ import mongoose, {Schema} from 'mongoose';
 const NotesSchema = new Schema({
 	date: Date,
 	text: String,
-	author: Number,
-	members: [Number],
-	families: [Number]
+	author: String,
+	members: [String],
+	families: [String]
 }, {timestamps: true});
 export const Notes = mongoose.model('Notes', NotesSchema);

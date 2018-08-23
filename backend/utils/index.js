@@ -1,5 +1,5 @@
 export function isLoggedIn(req) {
-	return (req.session && req.session._userId);
+	return (req.session && req.session.userId);
 }
 
 export function isLoggedInAdmin(req) {
