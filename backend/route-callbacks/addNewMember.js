@@ -13,6 +13,8 @@ export function addNewMember(req, res, Members) {
 					return res.json({success: true, data: member});
 				}
 			})
+		} else {
+			return res.json({success: false, error: 'You must provide a name to add a new quorum member'});
 		}
 	} else {
 		return res.json({success: false, error: 'You must be a logged in admin to add a new quorum member'});
