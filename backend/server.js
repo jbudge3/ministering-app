@@ -22,6 +22,7 @@ import {
 	addNewMember,
 	deleteMember,
 	addNewFamily,
+	deleteFamily,
 } from './route-callbacks';
 
 // Initialize express/router
@@ -47,13 +48,14 @@ app.use(session({
 // GET routes
 router.get('/users', (req, res) => getAllUsers(req, res, Users));
 // POST routes
-router.post('/users', (req, res) => addNewUser(req, res, Users));
 router.post('/login', (req, res) => login(req, res, Users));
+router.post('/users', (req, res) => addNewUser(req, res, Users));
 router.post('/members', (req, res) => addNewMember(req, res, Members));
 router.post('/families', (req, res) => addNewFamily(req, res, Families));
 // DELETE routes
 router.delete('/users/:userId', (req, res) => deleteUser(req, res, Users));
 router.delete('/members/:memberId', (req, res) => deleteMember(req, res, Members));
+router.delete('/families/:familyId', (req, res) => deleteFamily(req, res, Families));
 
 // Listen
 app.use('/api', router);
