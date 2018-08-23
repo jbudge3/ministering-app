@@ -20,6 +20,7 @@ import {
 	login,
 	deleteUser,
 	addNewMember,
+	deleteMember,
 } from './route-callbacks';
 
 // Initialize express/router
@@ -50,6 +51,7 @@ router.post('/login', (req, res) => login(req, res, Users));
 router.post('/members', (req, res) => addNewMember(req, res, Members));
 // DELETE routes
 router.delete('/users/:userId', (req, res) => deleteUser(req, res, Users));
+router.delete('/members/:memberId', (req, res) => deleteMember(req, res, Members));
 
 // Listen
 app.use('/api', router);

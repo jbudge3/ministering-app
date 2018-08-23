@@ -1,7 +1,6 @@
 import {isLoggedInAdmin} from '../utils';
 
 export function deleteUser(req, res, Users) {
-	console.log(req.session);
 	if (isLoggedInAdmin(req)) {
 		const {userId} = req.params;
 		if (userId) {
