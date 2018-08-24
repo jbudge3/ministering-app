@@ -10,7 +10,7 @@ export function addNewNote(req, res, Notes) {
 			members,
 			families,
 		} = req.body;
-		if (!members.length || !families.length) {
+		if (!members || !families || !members.length || !families.length) {
 			return res.json({success: false, error: 'You must include at least one member and/or family'});
 		} else if (date && text && author && members.length && families.length) {
 			note.date = date;
