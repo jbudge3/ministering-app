@@ -61,3 +61,17 @@ export function getAllNotes() {
 			});
 	});
 }
+
+export function getAllUsers() {
+	return new Promise((resolve, reject) => {
+		fetch('/api/users')
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
