@@ -24,6 +24,9 @@ import {
 	addNewFamily,
 	deleteFamily,
 	addNewNote,
+	getAllNotes,
+	getAllMembers,
+	getAllFamilies,
 } from './route-callbacks';
 
 // Initialize express/router
@@ -48,6 +51,9 @@ app.use(session({
 
 // GET routes
 router.get('/users', (req, res) => getAllUsers(req, res, Users));
+router.get('/notes', (req, res) => getAllNotes(req, res, Notes));
+router.get('/members', (req, res) => getAllMembers(req, res, Members));
+router.get('/families', (req, res) => getAllFamilies(req, res, Families));
 // POST routes
 router.post('/login', (req, res) => login(req, res, Users));
 router.post('/users', (req, res) => addNewUser(req, res, Users));
