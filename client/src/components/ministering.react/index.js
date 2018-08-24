@@ -4,6 +4,7 @@ import {
 	Route,
 } from 'react-router-dom';
 import {Notes} from '../notes.react';
+import {Login} from '../login.react';
 
 export class Ministering extends Component {
 	render() {
@@ -12,6 +13,7 @@ export class Ministering extends Component {
 				<div>
 					<Route exact path="/" component={Notes} />
 					<Route path="/home" component={Notes} />
+					<Route path="/login" component={Login} />
 				</div>
 			</Router>
 		);

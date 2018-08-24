@@ -26,6 +26,8 @@ export class Notes extends Component {
 					notes: response[2],
 					pending: false,
 				});
+			}, () => {
+				window.location = '/login';
 			});
 	}
 	render() {
