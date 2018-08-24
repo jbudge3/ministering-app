@@ -5,12 +5,13 @@ import {
 } from 'react-router-dom';
 import {Notes} from '../notes.react';
 import {Login} from '../login.react';
+import './ministering.css';
 
 export class Ministering extends Component {
 	render() {
 		return (
 			<Router>
-				<div>
+				<div className="container">
 					<Route exact path="/" component={Notes} />
 					<Route path="/home" component={Notes} />
 					<Route path="/login" component={Login} />
