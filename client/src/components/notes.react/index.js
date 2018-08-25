@@ -8,6 +8,7 @@ import {
 	message
 } from 'antd';
 import {ComposeNew} from '../compose-new.react';
+import {LoadingState} from '../loading.react';
 import {
 	getAllMembers,
 	getAllFamilies,
@@ -54,7 +55,7 @@ export class Notes extends Component {
 		} = this.state;
 
 		if (pending) {
-			return <h1>Loading...</h1>;
+			return <LoadingState />;
 		} else {
 			return (
 				<div className="Notes">

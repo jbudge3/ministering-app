@@ -8,6 +8,7 @@ import {
 } from 'antd';
 import moment from 'moment';
 import {getAllUsers} from '../../ajax';
+import {LoadingState} from '../loading.react';
 const {TextArea} = Input;
 const INITIAL_STATE = {
 	loading: true,
@@ -67,7 +68,7 @@ export class NewNote extends Component {
 
 	_renderLoadingOrForm = () => {
 		if (this.state.loading) {
-			return <h1>Loading</h1>;
+			return <LoadingState />;
 		} else {
 			return (
 				<Form layout="vertical">
