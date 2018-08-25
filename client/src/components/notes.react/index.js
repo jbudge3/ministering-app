@@ -9,6 +9,7 @@ import {
 	Select,
 	message
 } from 'antd';
+import {ComposeNew} from '../compose-new.react';
 import {
 	getAllMembers,
 	getAllFamilies,
@@ -63,9 +64,10 @@ export class Notes extends Component {
 						{this._renderTypeSelect()}
 						{type && this._renderMemberFamilySelect(type)}
 						{!type && this._renderDisabledSelect()}
-						<Tooltip placement="rightTop" title="Compose new note" mouseEnterDelay={1}>
-							<Button type="primary" icon="form" />
-						</Tooltip>
+						<ComposeNew
+							members={this.state.members}
+							families={this.state.families}
+						/>
 					</div>
 
 					{type && selectedId && (
