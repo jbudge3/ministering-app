@@ -1,5 +1,15 @@
 .Notes {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 	padding-top: 200px;
+}
+
+.Notes__cards {
+	margin-top: 30px;
+	width: 600px;
+}
+
+.Notes__card {
+	margin-top: 20px !important;
 }

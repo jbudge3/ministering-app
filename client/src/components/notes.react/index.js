@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import {
+	Card,
 	Select,
 	message
 } from 'antd';
@@ -43,6 +45,8 @@ export class Notes extends Component {
 		const {
 			pending,
 			type,
+			selectedId,
+			notes,
 		} = this.state;
 
 		if (pending) {
@@ -50,9 +54,18 @@ export class Notes extends Component {
 		} else {
 			return (
 				<div className="Notes">
-					{this._renderTypeSelect()}
-					{type && this._renderMemberFamilySelect(type)}
-					{!type && this._renderDisabledSelect()}
+					<div className="Notes__options">
+						{this._renderTypeSelect()}
+						{type && this._renderMemberFamilySelect(type)}
+						{!type && this._renderDisabledSelect()}
+					</div>
+
+					{type && selectedId && (
+						<div className="Notes__cards">
+							{this._renderNoteCards(type, selectedId, notes)}
+						</div>
+
+					)}
 				</div>
 
 			);
@@ -97,6 +110,7 @@ export class Notes extends Component {
 				optionFilterProp="children"
 				filterOption={this._filterSelect}
 				style={{width: 300}}
+				onChange={this._handleMemberFamilyChange}
 			>
 				{options}
 			</Select>
@@ -108,4 +122,24 @@ export class Notes extends Component {
 			<Select.Option value="message">Quorum Member or Family</Select.Option>
 		</Select>
 	);
+
+	_renderNoteCards = (type, id, notes) => {
+		const cards = notes.map((note) => {
+			if (note[type].indexOf(id) !== -1) {
+				const cardTitle = `${moment(note.date).format('MM/DD/YYYY')} - ${note.author}`;
+				return (
+					<Card
+						key={note._id}
+						title={cardTitle}
+						className="Notes__card"
+					>
+						<p>{note.text}</p>
+					</Card>
+				);
+			} else {
+				return null;
+			}
+		});
+		return cards;
+	}
 }
