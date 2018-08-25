@@ -3,27 +3,27 @@ import {
 	Modal,
 	Form,
 	Select,
-	Button,
 	Input,
 	DatePicker,
 } from 'antd';
 import moment from 'moment';
 import {getAllUsers} from '../../ajax';
 const {TextArea} = Input;
+const INITIAL_STATE = {
+	loading: true,
+	author: '',
+	date: '',
+	families: [],
+	members: [],
+	text: '',
+	users: [],
+};
 
 export class NewNote extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			loading: true,
-			author: '',
-			date: '',
-			families: [],
-			members: [],
-			text: '',
-			users: [],
-		}
+		this.state = INITIAL_STATE;
 	}
 
 	componentDidMount() {
@@ -44,6 +44,13 @@ export class NewNote extends Component {
 			onCancel,
 			onSave
 		} = this.props;
+		const {
+			date,
+			author,
+			members,
+			families,
+			text,
+		} = this.state;
 
 		return (
 			<Modal
@@ -51,7 +58,7 @@ export class NewNote extends Component {
 				title="New Note"
 				okText="Save Note"
 				onCancel={onCancel}
-				onOk={onSave}
+				onOk={() => onSave(date, author, members, families, text, this._onSaveCallback)}
 			>
 				{this._renderLoadingOrForm()}
 			</Modal>
@@ -107,6 +114,8 @@ export class NewNote extends Component {
 	_handleTextChange = (event) => this.setState({
 		text: event ? event.target.value : ''
 	});
+
+	_onSaveCallback = () => this.setState(INITIAL_STATE);
 
 	_renderDatePicker = () => (
 		<DatePicker

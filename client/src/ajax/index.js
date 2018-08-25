@@ -75,3 +75,24 @@ export function getAllUsers() {
 			});
 	});
 }
+
+export function addNewNote(date, author, members, families, text) {
+	const body = JSON.stringify({date, author, members, families, text});
+	return new Promise((resolve, reject) => {
+		fetch('/api/notes', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}

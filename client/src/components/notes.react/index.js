@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {orderBy} from 'lodash';
 import {
-	Tooltip,
-	Button,
 	Radio,
 	Card,
 	Select,
@@ -67,6 +65,7 @@ export class Notes extends Component {
 						<ComposeNew
 							members={this.state.members}
 							families={this.state.families}
+							onNewNote={this._handleNewNoteAdd}
 						/>
 					</div>
 
@@ -101,6 +100,14 @@ export class Notes extends Component {
 	_handleOrderByChange = (event) => this.setState({
 		order: event ? event.target.value : 'desc'
 	});
+
+	_handleNewNoteAdd = (note) => {
+		const newNotes = this.state.notes.slice();
+		newNotes.push(note);
+		this.setState({
+			notes: newNotes
+		});
+	};
 
 	_renderTypeSelect = () => (
 		<Select

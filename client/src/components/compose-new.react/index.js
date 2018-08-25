@@ -2,8 +2,10 @@ import React, {Component, Fragment} from 'react';
 import {
 	Tooltip,
 	Button,
+	message
 } from 'antd';
 import {NewNote} from '../new-note.react';
+import {addNewNote} from '../../ajax';
 
 export class ComposeNew extends Component {
 	state = {
@@ -41,8 +43,21 @@ export class ComposeNew extends Component {
 		visible: false
 	});
 
-	_handleOkClick = () => {
-		console.log('form submitted');
+	_handleOkClick = (date, author, members, families, text, callback) => {
+		addNewNote(date, author, members, families, text)
+			.then((data) => {
+				this.props.onNewNote(data);
+				this.setState({
+					visible: false
+				});
+				callback();
+				message.success('Your new note saved successfully');
+
+			})
+			.catch((error) => {
+				message.error('There was a problem saving your note. Please try again.');
+				console.log(error);
+			});
 	};
 
 }
