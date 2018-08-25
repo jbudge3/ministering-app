@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {orderBy} from 'lodash';
 import {
+	Tooltip,
+	Button,
 	Radio,
 	Card,
 	Select,
@@ -61,6 +63,9 @@ export class Notes extends Component {
 						{this._renderTypeSelect()}
 						{type && this._renderMemberFamilySelect(type)}
 						{!type && this._renderDisabledSelect()}
+						<Tooltip placement="rightTop" title="Compose new note" mouseEnterDelay={1}>
+							<Button type="primary" icon="form" />
+						</Tooltip>
 					</div>
 
 					{type && selectedId && (
@@ -97,9 +102,9 @@ export class Notes extends Component {
 
 	_renderTypeSelect = () => (
 		<Select
-			placeholder="See Quorum Members or Families"
+			placeholder="Select a Group"
 			optionFilterProp="children"
-			style={{width: 300, marginRight: 25}}
+			style={{width: 250, marginRight: 20}}
 			onChange={this._handleTypeChange}
 		>
 			<Select.Option value="members">Quorum Member</Select.Option>
@@ -120,7 +125,7 @@ export class Notes extends Component {
 				placeholder={type === 'members' ? 'Select a Quorum Member' : 'Select a Family'}
 				optionFilterProp="children"
 				filterOption={this._filterSelect}
-				style={{width: 300}}
+				style={{width: 250, marginRight: 20}}
 				onChange={this._handleMemberFamilyChange}
 			>
 				{options}
@@ -129,7 +134,7 @@ export class Notes extends Component {
 	};
 
 	_renderDisabledSelect = () => (
-		<Select defaultValue="message" style={{width: 300}} disabled>
+		<Select defaultValue="message" style={{width: 250, marginRight: 20}} disabled>
 			<Select.Option value="message">Quorum Member or Family</Select.Option>
 		</Select>
 	);
