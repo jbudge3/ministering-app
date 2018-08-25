@@ -6,7 +6,17 @@ export function getAllUsers(req, res, Users) {
 			if (error) {
 				return res.json({success: false, error});
 			} else {
-				return res.json({success: true, data: users});
+				console.log(req.session.userId);
+				const editedUsers = users.map((user) => {
+					const editedUser = {};
+					editedUser._id = user._id;
+					editedUser.name = user.name;
+					editedUser.username = user.username;
+					editedUser.isAdmin = user.isAdmin;
+					editedUser.isMe = user._id == req.session.userId;
+					return editedUser;
+				});
+				return res.json({success: true, data: editedUsers});
 			}
 		});
 	} else {
