@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import {orderBy} from 'lodash';
 import {
+	Radio,
 	Card,
 	Select,
 	message
@@ -23,7 +25,8 @@ export class Notes extends Component {
 			notes: null,
 			pending: true,
 			type: '',
-			selectedId: null
+			selectedId: null,
+			order: 'desc'
 		}
 	}
 
@@ -62,9 +65,12 @@ export class Notes extends Component {
 
 					{type && selectedId && (
 						<div className="Notes__cards">
+							<Radio.Group onChange={this._handleOrderByChange} value={this.state.order}>
+								<Radio value="desc">Newest First</Radio>
+								<Radio value="asc">Oldest First</Radio>
+							</Radio.Group>
 							{this._renderNoteCards(type, selectedId, notes)}
 						</div>
-
 					)}
 				</div>
 
@@ -77,11 +83,16 @@ export class Notes extends Component {
 	};
 
 	_handleTypeChange = (value) => this.setState({
-		type: value ? value : ''
+		type: value ? value : '',
+		selectedId: null
 	});
 
 	_handleMemberFamilyChange = (value) => this.setState({
 		selectedId: value ? value : null
+	});
+
+	_handleOrderByChange = (event) => this.setState({
+		order: event ? event.target.value : 'desc'
 	});
 
 	_renderTypeSelect = () => (
@@ -124,7 +135,8 @@ export class Notes extends Component {
 	);
 
 	_renderNoteCards = (type, id, notes) => {
-		const cards = notes.map((note) => {
+		const orderedNotes = orderBy(notes, ['date'], [this.state.order]);
+		const cards = orderedNotes.map((note) => {
 			if (note[type].indexOf(id) !== -1) {
 				const cardTitle = `${moment(note.date).format('MM/DD/YYYY')} - ${note.author}`;
 				return (
