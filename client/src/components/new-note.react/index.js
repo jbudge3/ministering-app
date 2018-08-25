@@ -115,7 +115,11 @@ export class NewNote extends Component {
 		text: event ? event.target.value : ''
 	});
 
-	_onSaveCallback = () => this.setState(INITIAL_STATE);
+	_onSaveCallback = () => {
+		this.setState({
+			text: ''
+		});
+	};
 
 	_renderDatePicker = () => (
 		<DatePicker
