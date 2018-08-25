@@ -8,6 +8,7 @@ import {
 	getAllFamilies,
 	getAllNotes,
 } from '../../ajax';
+import './notes.css';
 
 export class Notes extends Component {
 	constructor(props) {
@@ -51,6 +52,7 @@ export class Notes extends Component {
 				<div className="Notes">
 					{this._renderTypeSelect()}
 					{type && this._renderMemberFamilySelect(type)}
+					{!type && this._renderDisabledSelect()}
 				</div>
 
 			);
@@ -59,17 +61,21 @@ export class Notes extends Component {
 
 	_filterSelect = (input, option) => {
 		return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-	}
+	};
 
 	_handleTypeChange = (value) => this.setState({
 		type: value ? value : ''
+	});
+
+	_handleMemberFamilyChange = (value) => this.setState({
+		selectedId: value ? value : null
 	});
 
 	_renderTypeSelect = () => (
 		<Select
 			placeholder="See Quorum Members or Families"
 			optionFilterProp="children"
-			style={{width: 300}}
+			style={{width: 300, marginRight: 25}}
 			onChange={this._handleTypeChange}
 		>
 			<Select.Option value="members">Quorum Member</Select.Option>
@@ -96,4 +102,10 @@ export class Notes extends Component {
 			</Select>
 		);
 	};
+
+	_renderDisabledSelect = () => (
+		<Select defaultValue="message" style={{width: 300}} disabled>
+			<Select.Option value="message">Quorum Member or Family</Select.Option>
+		</Select>
+	);
 }
