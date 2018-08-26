@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
 	Tabs,
 	Button,
-	message,
 } from 'antd';
 import {LoadingState} from '../loading.react';
 import {UserSettings} from './components/user-settings.react';
