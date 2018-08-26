@@ -30,6 +30,7 @@ export class NoteCards extends Component {
 						title={cardTitle}
 						className="Notes__card"
 						extra={<DeleteNote onDeleteClick={() => this._handleDeleteNoteClick(note._id)}/>}
+						hoverable={true}
 					>
 						<p>{note.text}</p>
 					</Card>
