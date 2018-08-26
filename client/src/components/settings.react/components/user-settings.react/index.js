@@ -1,7 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
+import {
+	Button,
+	Select,
+} from 'antd';
 
 export class UserSettings extends Component {
 	render() {
-		return <h1>User Settings!</h1>;
+		return (
+			<Fragment>
+				<Button type="primary" icon="user-add">Add a New User</Button>
+			</Fragment>
+		);
 	}
 }

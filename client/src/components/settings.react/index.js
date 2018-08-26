@@ -45,13 +45,13 @@ export class Settings extends Component {
 				<div className="Settings">
 					<Tabs tabBarExtraContent={this._renderBackToNotes()}>
 						<Tabs.TabPane tab="Users" key={1}>
-							<UserSettings />
+							<UserSettings users={this.state.users} />
 						</Tabs.TabPane>
 						<Tabs.TabPane tab="Quorum Members" key={2}>
-							<MemberSettings />
+							<MemberSettings members={this.state.members} />
 						</Tabs.TabPane>
 						<Tabs.TabPane tab="Families" key={3}>
-							<FamilySettings />
+							<FamilySettings families={this.state.families} />
 						</Tabs.TabPane>
 					</Tabs>
 				</div>
