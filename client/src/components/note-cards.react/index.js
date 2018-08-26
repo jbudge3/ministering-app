@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {orderBy} from 'lodash';
-import {Card} from 'antd';
+import {Card, message} from 'antd';
 import {DeleteNote} from '../delete-note.react';
+import {deleteNote} from '../../ajax';
 
 export class NoteCards extends Component {
 	state = {
@@ -40,9 +41,17 @@ export class NoteCards extends Component {
 	}
 
 	_handleDeleteNoteClick = (id) => {
-		const deletedNotes = this.state.deletedNotes.slice();
-		deletedNotes.push(id);
-		this.setState({deletedNotes});
+		deleteNote(id)
+			.then((response) => {
+				const deletedNotes = this.state.deletedNotes.slice();
+				deletedNotes.push(id);
+				this.setState({deletedNotes});
+			})
+			.catch((error) => {
+				message.error('There was a problem deleting the note. Please try again later.');
+				console.log(error);
+			})
+
 	}
 
 }

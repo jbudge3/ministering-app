@@ -24,6 +24,7 @@ import {
 	addNewFamily,
 	deleteFamily,
 	addNewNote,
+	deleteNote,
 	getAllNotes,
 	getAllMembers,
 	getAllFamilies,
@@ -64,6 +65,7 @@ router.post('/notes', (req, res) => addNewNote(req, res, Notes));
 router.delete('/users/:userId', (req, res) => deleteUser(req, res, Users));
 router.delete('/members/:memberId', (req, res) => deleteMember(req, res, Members));
 router.delete('/families/:familyId', (req, res) => deleteFamily(req, res, Families));
+router.delete('/notes/:noteId', (req, res) => deleteNote(req, res, Notes));
 
 // Listen
 app.use('/api', router);

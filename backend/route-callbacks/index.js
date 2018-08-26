@@ -10,3 +10,4 @@ export {deleteFamily} from './deleteFamily';
 export {getAllFamilies} from './getAllFamilies';
 export {addNewNote} from './addNewNote';
 export {getAllNotes} from './getAllNotes';
+export {deleteNote} from './deleteNote';
