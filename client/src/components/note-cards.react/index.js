@@ -1,27 +1,48 @@
-import React from 'react';
+import React, {Component} from 'react';
 import moment from 'moment';
 import {orderBy} from 'lodash';
 import {Card} from 'antd';
+import {DeleteNote} from '../delete-note.react';
 
+export class NoteCards extends Component {
+	state = {
+		deletedNotes: []
+	};
 
-export function NoteCards(type, id, notes, order) {
-	const orderedNotes = orderBy(notes, ['date'], [order]);
-	const cards = orderedNotes.map((note) => {
-		if (note[type].indexOf(id) !== -1) {
-			const cardTitle = `${moment(note.date).format('MM/DD/YYYY')} - ${note.author}`;
-			return (
-				<Card
-					key={note._id}
-					title={cardTitle}
-					className="Notes__card"
-				>
-					<p>{note.text}</p>
-				</Card>
-			);
-		} else {
-			return null;
-		}
-	});
+	render() {
+		const {
+			type,
+			id,
+			order,
+			notes
+		} = this.props;
+		const {deletedNotes} = this.state;
+		const cards = [];
+		const orderedNotes = orderBy(notes, ['date'], [order]);
 
-	return cards;
+		orderedNotes.forEach((note) => {
+			if ((note[type].indexOf(id) !== -1) && (deletedNotes.indexOf(note._id) === -1)) {
+				const cardTitle = `${moment(note.date).format('MM/DD/YYYY')} - ${note.author}`;
+				cards.push(
+					<Card
+						key={note._id}
+						title={cardTitle}
+						className="Notes__card"
+						extra={<DeleteNote onDeleteClick={() => this._handleDeleteNoteClick(note._id)}/>}
+					>
+						<p>{note.text}</p>
+					</Card>
+				);
+			}
+		});
+
+		return cards;
+	}
+
+	_handleDeleteNoteClick = (id) => {
+		const deletedNotes = this.state.deletedNotes.slice();
+		deletedNotes.push(id);
+		this.setState({deletedNotes});
+	}
+
 }

@@ -75,7 +75,12 @@ export class Notes extends Component {
 								<Radio value="desc">Newest First</Radio>
 								<Radio value="asc">Oldest First</Radio>
 							</Radio.Group>
-							{NoteCards(type, selectedId, notes, order)}
+							<NoteCards
+								type={type}
+								id={selectedId}
+								notes={notes}
+								order={order}
+							/>
 						</div>
 					)}
 				</div>
