@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import moment from 'moment';
-import {orderBy} from 'lodash';
 import {
 	Radio,
-	Card,
 	Select,
 	message
 } from 'antd';
 import {ComposeNew} from '../compose-new.react';
 import {LoadingState} from '../loading.react';
+import {NoteCards} from '../note-cards.react';
 import {
 	getAllMembers,
 	getAllFamilies,
@@ -52,6 +50,7 @@ export class Notes extends Component {
 			type,
 			selectedId,
 			notes,
+			order,
 		} = this.state;
 
 		if (pending) {
@@ -76,7 +75,7 @@ export class Notes extends Component {
 								<Radio value="desc">Newest First</Radio>
 								<Radio value="asc">Oldest First</Radio>
 							</Radio.Group>
-							{this._renderNoteCards(type, selectedId, notes)}
+							{NoteCards(type, selectedId, notes, order)}
 						</div>
 					)}
 				</div>
@@ -148,25 +147,4 @@ export class Notes extends Component {
 			<Select.Option value="message">Quorum Member or Family</Select.Option>
 		</Select>
 	);
-
-	_renderNoteCards = (type, id, notes) => {
-		const orderedNotes = orderBy(notes, ['date'], [this.state.order]);
-		const cards = orderedNotes.map((note) => {
-			if (note[type].indexOf(id) !== -1) {
-				const cardTitle = `${moment(note.date).format('MM/DD/YYYY')} - ${note.author}`;
-				return (
-					<Card
-						key={note._id}
-						title={cardTitle}
-						className="Notes__card"
-					>
-						<p>{note.text}</p>
-					</Card>
-				);
-			} else {
-				return null;
-			}
-		});
-		return cards;
-	}
 }
