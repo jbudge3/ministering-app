@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {
+	Button,
+	Icon,
 	Radio,
 	Select,
 	message
@@ -67,6 +69,14 @@ export class Notes extends Component {
 							families={this.state.families}
 							onNewNote={this._handleNewNoteAdd}
 						/>
+						<Button
+							className="Notes__settingsLink"
+							shape="circle"
+							type="secondary"
+							onClick={this._handleSettingsButtonClick}
+						>
+							<Icon type="setting" />
+						</Button>
 					</div>
 
 					{type && selectedId && (
@@ -92,6 +102,8 @@ export class Notes extends Component {
 	_filterSelect = (input, option) => {
 		return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 	};
+
+	_handleSettingsButtonClick = () => window.location = '/settings';
 
 	_handleTypeChange = (value) => this.setState({
 		type: value ? value : '',
