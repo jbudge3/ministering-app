@@ -112,3 +112,51 @@ export function deleteNote(id) {
 			});
 	});
 }
+
+export function deleteUser(id) {
+	return new Promise((resolve, reject) => {
+		fetch(`/api/users/${id}`, {
+			method: 'DELETE'
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
+
+export function deleteMember(id) {
+	return new Promise((resolve, reject) => {
+		fetch(`/api/members/${id}`, {
+			method: 'DELETE'
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
+
+export function deleteFamily(id) {
+	return new Promise((resolve, reject) => {
+		fetch(`/api/families/${id}`, {
+			method: 'DELETE'
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
