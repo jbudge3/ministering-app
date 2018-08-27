@@ -3,9 +3,11 @@ import {
 	Button,
 	Select,
 	Form,
+	message,
 } from 'antd';
 import {DeleteItem} from '../delete-item.react';
 import {NewMember} from '../new-member.react';
+import {addNewMember, deleteMember} from '../../../../ajax';
 
 export class MemberSettings extends Component {
 	state = {
@@ -51,11 +53,38 @@ export class MemberSettings extends Component {
 	});
 
 	_handleConfirmDelete = () => {
-		console.log(this.state.memberId);
+		const id = this.state.memberId;
+		deleteMember(id)
+			.then((response) => {
+				message.success('Quorum Member deleted successfully');
+				const deletedMembers = this.state.deletedMembers.slice();
+				deletedMembers.push(id);
+				this.setState({
+					memberId: null,
+					deletedMembers
+				});
+			})
+			.catch((error) => {
+				message.error('Failed to delete quorum member');
+				console.log(error);
+			})
 	};
 
 	_handleAddNewMember = (name) => {
-		console.log(name);
+		addNewMember(name)
+			.then((response) => {
+				message.success('New Quorum Member added!');
+				const members = this.state.members.slice();
+				members.push(response);
+				this.setState({
+					addMemberVisible: false,
+					members,
+				});
+			})
+			.catch((error) => {
+				message.error('Adding new Quorum Member failed. Please try again.');
+				console.log(error);
+			});
 	};
 
 	_handleAddButtonClick = () => this.setState({
@@ -67,7 +96,12 @@ export class MemberSettings extends Component {
 	});
 
 	_renderMemberSelect = () => {
-		const options = this.state.members.map(option => <Select.Option key={option._id} value={option._id}>{option.name}</Select.Option>);
+		const options = [];
+		this.state.members.forEach(option => {
+			if (this.state.deletedMembers.indexOf(option._id) === -1) {
+				options.push(<Select.Option key={option._id} value={option._id}>{option.name}</Select.Option>)
+			}
+		});
 
 		return (
 			<Select
