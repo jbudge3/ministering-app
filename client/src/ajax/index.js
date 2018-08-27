@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 
+// Login
 export function login(username, password) {
 	return new Promise((resolve, reject) => {
 		fetch('/api/login', {
@@ -20,6 +21,7 @@ export function login(username, password) {
 	})
 };
 
+// GET all the stuff
 export function getAllMembers() {
 	return new Promise((resolve, reject) => {
 		fetch('/api/members')
@@ -76,6 +78,7 @@ export function getAllUsers() {
 	});
 }
 
+// POST new stuff
 export function addNewNote(date, author, members, families, text) {
 	const body = JSON.stringify({date, author, members, families, text});
 	return new Promise((resolve, reject) => {
@@ -97,6 +100,70 @@ export function addNewNote(date, author, members, families, text) {
 	});
 }
 
+export function addNewUser(name, username, password, passwordConf, isAdmin) {
+	const body = JSON.stringify({name, username, password, passwordConf, isAdmin});
+	return new Promise((resolve, reject) => {
+		fetch('/api/users', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
+
+export function addNewMember(name) {
+	const body = JSON.stringify({name});
+	return new Promise((resolve, reject) => {
+		fetch('/api/members', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
+
+export function addNewFamily(name, head) {
+	const body = JSON.stringify({name, head});
+	return new Promise((resolve, reject) => {
+		fetch('/api/families', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body
+		})
+			.then(response => response.json())
+			.then((response) => {
+				if (response.success) {
+					resolve(response.data);
+				} else {
+					reject(response.error);
+				}
+			});
+	});
+}
+
+// DELETE stuff
 export function deleteNote(id) {
 	return new Promise((resolve, reject) => {
 		fetch(`/api/notes/${id}`, {
