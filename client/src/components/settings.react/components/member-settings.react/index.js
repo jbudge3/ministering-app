@@ -1,22 +1,30 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {
 	Button,
 	Select,
 	Form,
-	Tooltip,
 } from 'antd';
 import {DeleteItem} from '../delete-item.react';
+import {NewMember} from '../new-member.react';
 
 export class MemberSettings extends Component {
 	state = {
-		memberId: null
+		memberId: null,
+		addMemberVisible: false,
+		members: this.props.members,
+		deletedMembers: [],
 	}
 
 	render() {
 		return (
 			<Form>
 				<Form.Item>
-					<Button type="primary" icon="user-add">Add Quorum Member</Button>
+					<Button onClick={this._handleAddButtonClick} type="primary" icon="user-add">Add Quorum Member</Button>
+					<NewMember
+						visible={this.state.addMemberVisible}
+						onAdd={this._handleAddNewMember}
+						onCancel={this._handleAddMemberCancel}
+					/>
 				</Form.Item>
 
 				<Form.Item>
@@ -44,10 +52,22 @@ export class MemberSettings extends Component {
 
 	_handleConfirmDelete = () => {
 		console.log(this.state.memberId);
-	}
+	};
+
+	_handleAddNewMember = (name) => {
+		console.log(name);
+	};
+
+	_handleAddButtonClick = () => this.setState({
+		addMemberVisible: true
+	});
+
+	_handleAddMemberCancel = () => this.setState({
+		addMemberVisible: false
+	});
 
 	_renderMemberSelect = () => {
-		const options = this.props.members.map(option => <Select.Option key={option._id} value={option._id}>{option.name}</Select.Option>);
+		const options = this.state.members.map(option => <Select.Option key={option._id} value={option._id}>{option.name}</Select.Option>);
 
 		return (
 			<Select
