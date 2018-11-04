@@ -73,7 +73,7 @@ export class UserSettings extends Component {
 	_handleAddNewUser = (name, username, password, passwordConf, isAdmin = false) => {
 		if (password !== passwordConf) {
 			message.error('Passwords do not match');
-		} else if (name, username, password, passwordConf) {
+		} else if (name && username && password && passwordConf) {
 			addNewUser(name, username, password, passwordConf, isAdmin)
 				.then((response) => {
 					message.success('New user added!');
