@@ -4,6 +4,7 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
+import path from 'path';
 // Local utility imports
 
 // Model imports
@@ -49,6 +50,15 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('../client/build'));
+
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve('ministering', 'client', 'build', 'index.html'));
+	})
+}
 
 // GET routes
 router.get('/users', (req, res) => getAllUsers(req, res, Users));
