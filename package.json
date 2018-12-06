@@ -18,6 +18,7 @@
 		"nodemon": "^1.18.3"
 	},
 	"scripts": {
+		"start": "cd backend && node server.js --exec babel-node --presets es2015,stage-0",
 		"start:server": "cd backend && nodemon server.js --exec babel-node --presets es2015,stage-0",
 		"start:client": "cd client && yarn start",
 		"start:dev": "concurrently \"yarn start:server\" \"yarn start:client\""
