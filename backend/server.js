@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 // Local utility imports
-import {getSecret} from './secrets';
+// import {getSecret} from './secrets'; getSecret('dbUri')
 // Model imports
 import {
 	Users,
@@ -36,7 +36,7 @@ const router = express.Router();
 
 // API and DB setup
 const API_PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGODB_URI || getSecret('dbUri'), {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
