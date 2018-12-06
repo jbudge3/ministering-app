@@ -21,6 +21,6 @@
 		"start:server": "cd backend && nodemon server.js --exec babel-node --presets es2015,stage-0",
 		"start:client": "cd client && yarn start",
 		"start:dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn install --prefix client && npm run build --prefix client"
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn install --prefix client && yarn build --prefix client"
 	}
 }
