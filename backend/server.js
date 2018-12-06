@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 // Local utility imports
-// import {getSecret} from './secrets'; getSecret('dbUri')
+
 // Model imports
 import {
 	Users,
