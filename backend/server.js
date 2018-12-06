@@ -36,7 +36,7 @@ const router = express.Router();
 
 // API and DB setup
 const API_PORT = process.env.PORT || 3001;
-mongoose.connect(getSecret('dbUri'), {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI || getSecret('dbUri'), {useNewUrlParser: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
