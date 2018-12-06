@@ -6,7 +6,7 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import path from 'path';
 // Local utility imports
-
+import { getSecret } from './secrets';
 // Model imports
 import {
 	Users,
@@ -37,7 +37,7 @@ const router = express.Router();
 
 // API and DB setup
 const API_PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI || getSecret('dbUri'), {useNewUrlParser: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -50,15 +50,6 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
-
-// Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('../client/build'));
-
-	app.get('*', (req, res) => {
-		res.sendFile(path.resolve('ministering', 'client', 'build', 'index.html'));
-	})
-}
 
 // GET routes
 router.get('/users', (req, res) => getAllUsers(req, res, Users));
