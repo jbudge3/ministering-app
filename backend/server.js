@@ -68,6 +68,15 @@ router.delete('/members/:memberId', (req, res) => deleteMember(req, res, Members
 router.delete('/families/:familyId', (req, res) => deleteFamily(req, res, Families));
 router.delete('/notes/:noteId', (req, res) => deleteNote(req, res, Notes));
 
+if (process.env.NODE_ENV === 'production') {
+	// Serve static file
+	app.use(express.static('../client/build'));
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve('../client', 'build', 'index.html'));
+	});
+}
+
+
 // Listen
 app.use('/api', router);
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
