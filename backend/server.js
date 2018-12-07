@@ -14,7 +14,7 @@ var Families = require('./models/families');
 var Notes = require('./models/notes');
 // Endpoint callbacks
 var	getAllUsers = require('./route-callbacks/getAllUsers');
-var	addNewUser = require('./route-callbacks/somethingdifferent');
+var	addNewUser = require('./route-callbacks/addNewUser');
 var	login = require('./route-callbacks/login');
 var	deleteUser = require('./route-callbacks/deleteUser');
 var	addNewMember = require('./route-callbacks/addNewMember');
@@ -64,6 +64,8 @@ router.delete('/members/:memberId', function(req, res) { deleteMember(req, res, 
 router.delete('/families/:familyId', function(req, res) { deleteFamily(req, res, Families) });
 router.delete('/notes/:noteId', function(req, res) { deleteNote(req, res, Notes) });
 
+app.use('/api', router);
+
 if (process.env.NODE_ENV === 'production') {
 	// Serve static file
 	app.use(express.static('../client/build'));
@@ -74,5 +76,4 @@ if (process.env.NODE_ENV === 'production') {
 
 
 // Listen
-app.use('/api', router);
 app.listen(API_PORT, function() { console.log(`Listening on port ${API_PORT}`) });
