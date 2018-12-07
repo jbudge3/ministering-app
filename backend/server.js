@@ -5,8 +5,6 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var path = require('path');
-// Local utility imports
-var getSecret = require('./secrets');
 // Model imports
 var Users = require('./models/users');
 var Members = require('./models/members');
@@ -26,6 +24,10 @@ var	deleteNote = require('./route-callbacks/deleteNote');
 var	getAllNotes = require('./route-callbacks/getAllNotes');
 var	getAllMembers = require('./route-callbacks/getAllMembers');
 var	getAllFamilies = require('./route-callbacks/getAllFamilies');
+// Local utility imports
+if (process.env.NODE_ENV !== 'production') {
+	var getSecret = require('./secrets');
+}
 
 // Initialize express/router
 var app = express();
