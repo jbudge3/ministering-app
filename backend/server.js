@@ -33,7 +33,7 @@ var router = express.Router();
 
 // API and DB setup
 var API_PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useMongoClient: true});
+mongoose.connect(process.env.MONGODB_URI || getSecret('dbUri'), {useNewUrlParser: true, useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
