@@ -24,7 +24,12 @@ export function login(username, password) {
 // GET all the stuff
 export function getAllMembers() {
 	return new Promise((resolve, reject) => {
-		fetch('/api/members')
+		fetch('/api/members', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
 			.then(response => response.json())
 			.then((response) => {
 				if (response.success) {
