@@ -1,10 +1,11 @@
-import {isLoggedIn} from '../utils';
+var isLoggedIn = require('../utils').isLoggedIn;
 
-export function deleteNote(req, res, Notes) {
+module.exports = function(req, res, Notes) {
 	if (isLoggedIn(req)) {
-		const {noteId} = req.params;
+		var noteId = req.params.noteId;
+
 		if (noteId) {
-			Notes.deleteOne({_id: noteId}, (error) => {
+			Notes.deleteOne({_id: noteId}, function(error) {
 				if (error) {
 					return res.json({succes: false, error});
 				}

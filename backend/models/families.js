@@ -1,8 +1,12 @@
-import mongoose, {Schema} from 'mongoose';
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 // Families model
-const FamiliesSchema = new Schema({
+var FamiliesSchema = new Schema({
 	name: String,
 	head: String
 });
-export const Families = mongoose.model('Families', FamiliesSchema);
+
+var Families = mongoose.model('Families', FamiliesSchema);
+
+module.exports = Families; 

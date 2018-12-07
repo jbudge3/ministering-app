@@ -1,11 +1,14 @@
-import mongoose, {Schema} from 'mongoose';
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 // Members model
-const MembersSchema = new Schema({
+var MembersSchema = new Schema({
 	name: {
 		type: String,
 		unique: true,
 		required: true
 	}
 });
-export const Members = mongoose.model('Members', MembersSchema);
+
+var Members = mongoose.model('Members', MembersSchema);
+module.exports = Members;

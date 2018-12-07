@@ -1,13 +1,15 @@
-import {isLoggedInAdmin} from '../utils';
+var isLoggedInAdmin = require('../utils').isLoggedInAdmin;
 
-export function addNewFamily(req, res, Families) {
+module.exports = function(req, res, Families) {
 	if (isLoggedInAdmin(req)) {
-		const family = new Families();
-		const {name, head} = req.body;
+		var family = new Families();
+		var name = req.body.name;
+		var head = req.body.head;
+
 		if (name && head) {
 			family.name = name;
 			family.head = head;
-			family.save((error) => {
+			family.save(function(error) {
 				if (error) {
 					return res.json({success: false, error});
 				} else {

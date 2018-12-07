@@ -1,6 +1,8 @@
-export function login(req, res, Users) {
-	const {username, password} = req.body;
-	Users.authenticate(username, password, (error, user) => {
+module.exports = function(req, res, Users) {
+	var username = req.body.username;
+	var password = req.body.password;
+
+	Users.authenticate(username, password, function(error, user) {
 		if (error || !user) {
 			req.session.userId = null;
 			req.session.isAdmin = false;
@@ -10,5 +12,5 @@ export function login(req, res, Users) {
 			req.session.isAdmin = user.isAdmin;
 			return res.json({success: true});
 		}
-	})
+	});
 }

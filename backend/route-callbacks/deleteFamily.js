@@ -1,15 +1,15 @@
-import {isLoggedInAdmin} from '../utils';
+var isLoggedInAdmin = require('../utils').isLoggedInAdmin;
 
-export function deleteFamily(req, res, Families) {
+module.exports = function(req, res, Families) {
 	if (isLoggedInAdmin(req)) {
-		const {familyId} = req.params;
+		var familyId = req.params.familyId;
 		if (familyId) {
-			Families.deleteOne({_id: familyId}, (error) => {
+			Families.deleteOne({_id: familyId}, function(error) {
 				if (error) {
 					return res.json({succes: false, error});
 				}
 				return res.json({success: true});
-			})
+			});
 		} else {
 			return res.json({succes: false, error: 'No family id provided'});
 		}

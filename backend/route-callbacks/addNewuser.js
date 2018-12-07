@@ -1,22 +1,26 @@
-import {isLoggedInAdmin} from '../utils';
+var isLoggedInAdmin = require('../utils').isLoggedInAdmin;
 
-export function addNewUser(req, res, Users) {
+module.exports = function(req, res, Users) {
 	if (isLoggedInAdmin(req)) {
-		const user = new Users();
-		const {
-			name,
-			username,
-			password,
-			passwordConf,
-			isAdmin
-		} = req.body;
+		var user = new Users();
+		var name = req.body.name;
+		var username = req.body.username;
+		var password = req.body.password;
+		var passwordConf = req.body.passwordConf;
+		var isAdmin = req.body.isAdmin;
+
 		if (name && username && password && passwordConf) {
 			user.name = name;
 			user.username = username;
 			user.password = password;
 			user.passwordConf = passwordConf;
-			user.isAdmin = isAdmin ? isAdmin : false;
-			user.save((error) => {
+			if (isAdmin) {
+				user.isAmdin = isAdmin;
+			} else {
+				user.isAdmin = false;
+			}
+
+			user.save(function(error) {
 				if (error) {
 					return res.json({success: false, error});
 				} else {

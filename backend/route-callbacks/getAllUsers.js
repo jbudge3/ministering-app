@@ -1,14 +1,14 @@
-import {isLoggedIn} from '../utils';
+var isLoggedIn = require('../utils').isLoggedIn;
 
-export function getAllUsers(req, res, Users) {
+module.exports = function(req, res, Users) {
 	if (isLoggedIn(req)) {
-		Users.find((error, users) => {
+		Users.find(function(error, users) {
 			if (error) {
 				return res.json({success: false, error});
 			} else {
 				console.log(req.session.userId);
-				const editedUsers = users.map((user) => {
-					const editedUser = {};
+				var editedUsers = users.map(function(user) {
+					var editedUser = {};
 					editedUser._id = user._id;
 					editedUser.name = user.name;
 					editedUser.username = user.username;

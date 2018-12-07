@@ -1,15 +1,15 @@
-import {isLoggedInAdmin} from '../utils';
+var isLoggedInAdmin = require('../utils').isLoggedInAdmin;
 
-export function deleteMember(req, res, Members) {
+module.exports = function(req, res, Members) {
 	if (isLoggedInAdmin(req)) {
-		const {memberId} = req.params;
+		var memberId = req.params.memberId;
 		if (memberId) {
-			Members.deleteOne({_id: memberId}, (error) => {
+			Members.deleteOne({_id: memberId}, function(error) {
 				if (error) {
 					return res.json({succes: false, error});
 				}
 				return res.json({success: true});
-			})
+			});
 		} else {
 			return res.json({succes: false, error: 'No member id provided'});
 		}

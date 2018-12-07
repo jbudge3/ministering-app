@@ -1,12 +1,13 @@
-import {isLoggedInAdmin} from '../utils';
+var isLoggedInAdmin = require('../utils').isLoggedInAdmin;
 
-export function addNewMember(req, res, Members) {
+module.exports = function(req, res, Members) {
 	if (isLoggedInAdmin(req)) {
-		const member = new Members();
-		const {name} = req.body;
+		var member = new Members();
+		var name = req.body.name;
+
 		if (name) {
 			member.name = name;
-			member.save((error) => {
+			member.save(function(error) {
 				if (error) {
 					return res.json({success: false, error});
 				} else {

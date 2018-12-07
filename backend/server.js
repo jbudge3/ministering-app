@@ -1,44 +1,40 @@
 // Dependecy imports
-import express from 'express';
-import session from 'express-session';
-import bodyParser from 'body-parser';
-import logger from 'morgan';
-import mongoose from 'mongoose';
-import path from 'path';
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var mongoose = require('mongoose');
+var path = require('path');
 // Local utility imports
-import { getSecret } from './secrets';
+var getSecret = require('./secrets');
 // Model imports
-import {
-	Users,
-	Members,
-	Families,
-	Notes,
-} from './models';
+var Users = require('./models/users');
+var Members = require('./models/members');
+var Families = require('./models/families');
+var Notes = require('./models/notes');
 // Endpoint callbacks
-import {
-	getAllUsers,
-	addNewUser,
-	login,
-	deleteUser,
-	addNewMember,
-	deleteMember,
-	addNewFamily,
-	deleteFamily,
-	addNewNote,
-	deleteNote,
-	getAllNotes,
-	getAllMembers,
-	getAllFamilies,
-} from './route-callbacks';
+var	getAllUsers = require('./route-callbacks/getAllUsers');
+var	addNewUser = require('./route-callbacks/addNewUser');
+var	login = require('./route-callbacks/login');
+var	deleteUser = require('./route-callbacks/deleteUser');
+var	addNewMember = require('./route-callbacks/addNewMember');
+var	deleteMember = require('./route-callbacks/deleteMember');
+var	addNewFamily = require('./route-callbacks/addNewFamily');
+var	deleteFamily = require('./route-callbacks/deleteFamily');
+var	addNewNote = require('./route-callbacks/addNewNote');
+var	deleteNote = require('./route-callbacks/deleteNote');
+var	getAllNotes = require('./route-callbacks/getAllNotes');
+var	getAllMembers = require('./route-callbacks/getAllMembers');
+var	getAllFamilies = require('./route-callbacks/getAllFamilies');
 
 // Initialize express/router
-const app = express();
-const router = express.Router();
+var app = express();
+var router = express.Router();
 
 // API and DB setup
-const API_PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGODB_URI || getSecret('dbUri'), {useNewUrlParser: true});
-const db = mongoose.connection;
+var API_PORT = process.env.PORT || 3001;
+mongoose.connect(getSecret('dbUri'), {useNewUrlParser: true});
+var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Middleware
@@ -52,26 +48,26 @@ app.use(session({
 }));
 
 // GET routes
-router.get('/users', (req, res) => getAllUsers(req, res, Users));
-router.get('/notes', (req, res) => getAllNotes(req, res, Notes));
-router.get('/members', (req, res) => getAllMembers(req, res, Members));
-router.get('/families', (req, res) => getAllFamilies(req, res, Families));
+router.get('/users', function(req, res) { getAllUsers(req, res, Users) });
+router.get('/notes', function(req, res) { getAllNotes(req, res, Notes) });
+router.get('/members', function(req, res) { getAllMembers(req, res, Members) });
+router.get('/families', function(req, res) { getAllFamilies(req, res, Families) });
 // POST routes
-router.post('/login', (req, res) => login(req, res, Users));
-router.post('/users', (req, res) => addNewUser(req, res, Users));
-router.post('/members', (req, res) => addNewMember(req, res, Members));
-router.post('/families', (req, res) => addNewFamily(req, res, Families));
-router.post('/notes', (req, res) => addNewNote(req, res, Notes));
+router.post('/login', function(req, res) { login(req, res, Users) });
+router.post('/users', function(req, res) { addNewUser(req, res, Users) });
+router.post('/members', function(req, res) { addNewMember(req, res, Members) });
+router.post('/families', function(req, res) { addNewFamily(req, res, Families) });
+router.post('/notes', function(req, res) { addNewNote(req, res, Notes) });
 // DELETE routes
-router.delete('/users/:userId', (req, res) => deleteUser(req, res, Users));
-router.delete('/members/:memberId', (req, res) => deleteMember(req, res, Members));
-router.delete('/families/:familyId', (req, res) => deleteFamily(req, res, Families));
-router.delete('/notes/:noteId', (req, res) => deleteNote(req, res, Notes));
+router.delete('/users/:userId', function(req, res) { deleteUser(req, res, Users) });
+router.delete('/members/:memberId', function(req, res) { deleteMember(req, res, Members) });
+router.delete('/families/:familyId', function(req, res) { deleteFamily(req, res, Families) });
+router.delete('/notes/:noteId', function(req, res) { deleteNote(req, res, Notes) });
 
 if (process.env.NODE_ENV === 'production') {
 	// Serve static file
 	app.use(express.static('../client/build'));
-	app.get('*', (req, res) => {
+	app.get('*', function(req, res) {
 		res.sendFile(path.resolve('../client', 'build', 'index.html'));
 	});
 }
@@ -79,4 +75,4 @@ if (process.env.NODE_ENV === 'production') {
 
 // Listen
 app.use('/api', router);
-app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
+app.listen(API_PORT, function() { console.log(`Listening on port ${API_PORT}`) });

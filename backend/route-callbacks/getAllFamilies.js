@@ -1,8 +1,8 @@
-import {isLoggedIn} from '../utils';
+var isLoggedIn = require('../utils').isLoggedIn;
 
-export function getAllFamilies(req, res, Families) {
+module.exports = function(req, res, Families) {
 	if (isLoggedIn(req)) {
-		Families.find((error, families) => {
+		Families.find(function(error, families) {
 			if (error) {
 				return res.json({success: false, error});
 			} else {

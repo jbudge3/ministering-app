@@ -1,15 +1,15 @@
-import {isLoggedIn} from '../utils';
+var isLoggedIn = require('../utils').isLoggedIn;
 
-export function addNewNote(req, res, Notes) {
+module.exports = function(req, res, Notes) {
 	if (isLoggedIn(req)) {
-		const note = new Notes();
-		const {
-			date,
-			text,
-			author,
-			members,
-			families,
-		} = req.body;
+		var note = new Notes();
+
+		var	date = req.body.date;
+		var	text = req.body.text;
+		var	author = req.body.author;
+		var	members = req.body.members;
+		var	families = req.body.families;
+
 		if (!members || !families || !members.length || !families.length) {
 			return res.json({success: false, error: 'You must include at least one member and/or family'});
 		} else if (date && text && author && members.length && families.length) {
@@ -18,7 +18,7 @@ export function addNewNote(req, res, Notes) {
 			note.author = author;
 			note.members = members;
 			note.families = families;
-			note.save((error) => {
+			note.save(function(error) {
 				if (error) {
 					return res.json({success: false, error});
 				} else {
