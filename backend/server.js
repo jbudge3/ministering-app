@@ -14,7 +14,7 @@ var Families = require('./models/families');
 var Notes = require('./models/notes');
 // Endpoint callbacks
 var	getAllUsers = require('./route-callbacks/getAllUsers');
-var	addNewUser = require('./route-callbacks/addNewUser');
+var	addNewUser = require('./route-callbacks/somethingdifferent');
 var	login = require('./route-callbacks/login');
 var	deleteUser = require('./route-callbacks/deleteUser');
 var	addNewMember = require('./route-callbacks/addNewMember');
