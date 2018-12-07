@@ -15,7 +15,7 @@ module.exports = function(req, res, Users) {
 			user.password = password;
 			user.passwordConf = passwordConf;
 			if (isAdmin) {
-				user.isAmdin = isAdmin;
+				user.isAdmin = isAdmin;
 			} else {
 				user.isAdmin = false;
 			}
