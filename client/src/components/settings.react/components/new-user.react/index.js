@@ -35,8 +35,8 @@ export class NewUser extends Component {
 				title="Add New User"
 				okText="Add"
 				visible={visible}
-				onOk={() => onAdd(name, username, password, passwordConf, isAdmin)}
-				onCancel={onCancel}
+				onOk={() => onAdd(name, username, password, passwordConf, isAdmin, this._handleModalClose)}
+				onCancel={() => onCancel(this._handleModalClose)}
 			>
 				<Form>
 					<Form.Item>
@@ -79,7 +79,7 @@ export class NewUser extends Component {
 					</Form.Item>
 
 					<Form.Item>
-						<Checkbox onChange={this._handleCheckboxChange}>
+						<Checkbox onChange={this._handleCheckboxChange} checked={isAdmin}>
 							This user will be an Administrator (not recommended)
 						</Checkbox>
 					</Form.Item>
@@ -88,6 +88,14 @@ export class NewUser extends Component {
 			</Modal>
 		)
 	}
+
+	_handleModalClose = () => this.setState({
+		name: '',
+		username: '',
+		password: '',
+		passwordConf: '',
+		isAdmin: false
+	});
 
 	_handleNameInputChange = (event) => this.setState({
 		name: event ? event.target.value : ''

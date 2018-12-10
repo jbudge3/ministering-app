@@ -70,12 +70,15 @@ export class UserSettings extends Component {
 			})
 	};
 
-	_handleAddNewUser = (name, username, password, passwordConf, isAdmin = false) => {
+	_handleAddNewUser = (name, username, password, passwordConf, isAdmin = false, onSuccess) => {
 		if (password !== passwordConf) {
 			message.error('Passwords do not match');
 		} else if (name && username && password && passwordConf) {
 			addNewUser(name, username, password, passwordConf, isAdmin)
 				.then((response) => {
+					if (typeof onSuccess === 'function') {
+						onSuccess();
+					}
 					message.success('New user added!');
 					const users = this.state.users.slice();
 					users.push(response);
@@ -97,9 +100,14 @@ export class UserSettings extends Component {
 		addUserVisible: true
 	});
 
-	_handleAddUserCancel = () => this.setState({
-		addUserVisible: false
-	});
+	_handleAddUserCancel = (onCancel) => {
+		if (typeof onCancel === 'function') {
+			onCancel();
+		}
+		this.setState({
+			addUserVisible: false
+		});
+	}
 
 	_renderUserSelect = () => {
 		const options = [];

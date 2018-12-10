@@ -24,8 +24,8 @@ export class NewFamily extends Component {
 				title="Add New Family"
 				okText="Add"
 				visible={visible}
-				onOk={() => onAdd(this.state.lastName, this.state.householdHeads)}
-				onCancel={onCancel}
+				onOk={() => onAdd(this.state.lastName, this.state.householdHeads, this._handleModalClose)}
+				onCancel={() => onCancel(this._handleModalClose)}
 			>
 				<Form>
 					<Form.Item>
@@ -57,6 +57,11 @@ export class NewFamily extends Component {
 			</Modal>
 		)
 	}
+
+	_handleModalClose = () => this.setState({
+		lastName: '',
+		householdHeads: '',
+	});
 
 	_handleLastNameInputChange = (event) => this.setState({
 		lastName: event ? event.target.value : ''

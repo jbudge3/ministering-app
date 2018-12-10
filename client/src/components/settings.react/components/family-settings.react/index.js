@@ -49,13 +49,21 @@ export class FamilySettings extends Component {
 		addFamilyVisible: true
 	});
 
-	_handleAddFamilyCancel = () => this.setState({
-		addFamilyVisible: false
-	});
+	_handleAddFamilyCancel = (onCancel) => {
+		if (typeof onCancel === 'function') {
+			onCancel();
+		}
+		this.setState({
+			addFamilyVisible: false
+		});
+	}
 
-	_handleAddNewFamily = (name, head) => {
+	_handleAddNewFamily = (name, head, onSuccess) => {
 		addNewFamily(name, head)
 			.then((response) => {
+				if (typeof onSuccess === 'function') {
+					onSuccess();
+				}
 				message.success('New Family added!');
 				const families = this.state.families.slice();
 				families.push(response);

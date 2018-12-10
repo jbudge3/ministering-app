@@ -70,9 +70,12 @@ export class MemberSettings extends Component {
 			})
 	};
 
-	_handleAddNewMember = (name) => {
+	_handleAddNewMember = (name, onSuccess) => {
 		addNewMember(name)
 			.then((response) => {
+				if (typeof onSuccess === 'function') {
+					onSuccess();
+				}
 				message.success('New Quorum Member added!');
 				const members = this.state.members.slice();
 				members.push(response);
@@ -91,9 +94,14 @@ export class MemberSettings extends Component {
 		addMemberVisible: true
 	});
 
-	_handleAddMemberCancel = () => this.setState({
-		addMemberVisible: false
-	});
+	_handleAddMemberCancel = (onCancel) => {
+		if (typeof onCancel === 'function') {
+			onCancel();
+		}
+		this.setState({
+			addMemberVisible: false
+		});
+	}
 
 	_renderMemberSelect = () => {
 		const options = [];

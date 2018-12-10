@@ -23,8 +23,8 @@ export class NewMember extends Component {
 				title="Add New Quorum Member"
 				okText="Add"
 				visible={visible}
-				onOk={() => onAdd(this.state.name)}
-				onCancel={onCancel}
+				onOk={() => onAdd(this.state.name, this._handleModalClose)}
+				onCancel={() => onCancel(this._handleModalClose)}
 			>
 				<Form>
 					<Form.Item>
@@ -44,6 +44,8 @@ export class NewMember extends Component {
 			</Modal>
 		)
 	}
+
+	_handleModalClose = () => this.setState({name: ''})
 
 	_handleNameInputChange = (event) => this.setState({
 		name: event ? event.target.value : ''
