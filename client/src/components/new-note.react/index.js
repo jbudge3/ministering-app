@@ -58,8 +58,8 @@ export class NewNote extends Component {
 				visible={visible}
 				title="New Note"
 				okText="Save Note"
-				onCancel={onCancel}
-				onOk={() => onSave(date, author, members, families, text, this._onSaveCallback)}
+				onCancel={() => onCancel(this._handleModalClose)}
+				onOk={() => onSave(date, author, members, families, text, this._handleModalClose)}
 			>
 				{this._renderLoadingOrForm()}
 			</Modal>
@@ -96,9 +96,11 @@ export class NewNote extends Component {
 		return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 	};
 
-	_handleDateChange = (value) => this.setState({
-		date: value ? moment(value).format('MM/DD/YYYY') : ''
-	})
+	_handleDateChange = (value) => {
+		this.setState({
+			date: value ? value.format('MM/DD/YYYY') : ''
+		});
+	}
 
 	_handleAuthorChange = (value) => this.setState({
 		author: value ? value : ''
@@ -112,20 +114,23 @@ export class NewNote extends Component {
 		}
 	};
 
+	_handleModalClose = () => this.setState({
+		author: '',
+		date: '',
+		families: [],
+		members: [],
+		text: '',
+	});
+
 	_handleTextChange = (event) => this.setState({
 		text: event ? event.target.value : ''
 	});
-
-	_onSaveCallback = () => {
-		this.setState({
-			text: ''
-		});
-	};
 
 	_renderDatePicker = () => (
 		<DatePicker
 			format="MM/DD/YYYY"
 			onChange={this._handleDateChange}
+			value={this.state.date ? moment(this.state.date, 'MM/DD/YYYY') : undefined}
 		/>
 	);
 
@@ -136,7 +141,7 @@ export class NewNote extends Component {
 		});
 
 		return (
-			<Select placeholder="Author" onChange={this._handleAuthorChange}>
+			<Select allowClear={true} placeholder="Author" onChange={this._handleAuthorChange} value={this.state.author || undefined}>
 				{options}
 			</Select>
 		)
@@ -155,6 +160,7 @@ export class NewNote extends Component {
 				optionFilterProp="children"
 				filterOption={this._filterSelect}
 				onChange={(value) => this._handleMemberFamilyChange(value, type)}
+				value={this.state[type]}
 			>
 				{options}
 			</Select>

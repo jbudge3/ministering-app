@@ -39,18 +39,26 @@ export class ComposeNew extends Component {
 		visible: true
 	});
 
-	_handleCancelClick = () => this.setState({
-		visible: false
-	});
+	_handleCancelClick = (onCancel) => {
+		if (typeof onCancel === 'function') {
+			onCancel();
+		}
+		this.setState({
+			visible: false
+		});
+	};
 
-	_handleOkClick = (date, author, members, families, text, callback) => {
+	_handleOkClick = (date, author, members, families, text, onSuccess) => {
 		addNewNote(date, author, members, families, text)
 			.then((data) => {
+				if (typeof onSuccess === 'function') {
+					onSuccess();
+				}
 				this.props.onNewNote(data);
 				this.setState({
 					visible: false
 				});
-				callback();
+
 				message.success('Your new note saved successfully');
 
 			})
